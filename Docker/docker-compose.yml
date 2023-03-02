@@ -1,0 +1,67 @@
+version: "3.9"
+services:
+    cloud: 
+        image: cloud
+        networks:
+          customnetwork:
+            ipv4_address: 172.20.0.2 
+        command: bash -c "python cloud.py 3 23 10"
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.60"
+                  memory: 2048M
+                reservations:
+                  cpus: "0.35"
+                  memory: 512M   
+       
+    edge0: 
+        image: edge
+        networks:
+          customnetwork:
+            ipv4_address: 172.20.0.3    
+        command: bash -c "python edge.py data0.csv 23 10"
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.30"
+                  memory: 512M
+                reservations:
+                  cpus: "0.55"
+                  memory: 128M         
+
+    edge1: 
+        image: edge
+        networks:
+          customnetwork:
+            ipv4_address: 172.20.0.4    
+        command: bash -c "python edge.py data1.csv 23 10"
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.30"
+                  memory: 512M
+                reservations:
+                  cpus: "0.55"
+                  memory: 128M   
+    
+    edge2:
+        image: edge
+        networks:
+          customnetwork:
+            ipv4_address: 172.20.0.5
+        command: bash -c "python edge.py data2.csv 23 10"
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.30"
+                  memory: 512M
+                reservations:
+                  cpus: "0.55"
+                  memory: 128M   
+
+networks:
+  customnetwork:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
