@@ -1,11 +1,15 @@
 version: "3.9"
 services:
-    cloud: 
+    cloud:  
+        container_name: cloud    
         image: cloud
         networks:
-          customnetwork:
+          custom:
             ipv4_address: 172.20.0.2 
-        command: bash -c "python cloud.py 3 23 10"
+        cap_add:
+            - NET_ADMIN            
+        command: bash -c "python cloud.py 3 23 10" 
+        command: tc qdisc add dev eth0 root netem delay 100ms
         deploy:
             resources:
                 limits:
@@ -16,10 +20,13 @@ services:
                   memory: 512M   
        
     edge0: 
+        container_name: edge0
         image: edge
         networks:
-          customnetwork:
-            ipv4_address: 172.20.0.3    
+          custom:
+            ipv4_address: 172.20.0.3
+        cap_add:
+            - NET_ADMIN            
         command: bash -c "python edge.py data0.csv 23 10"
         deploy:
             resources:
@@ -31,10 +38,13 @@ services:
                   memory: 128M         
 
     edge1: 
+        container_name: edge1
         image: edge
         networks:
-          customnetwork:
+          custom:
             ipv4_address: 172.20.0.4    
+        cap_add:
+            - NET_ADMIN            
         command: bash -c "python edge.py data1.csv 23 10"
         deploy:
             resources:
@@ -46,10 +56,13 @@ services:
                   memory: 128M   
     
     edge2:
+        container_name: edge2
         image: edge
         networks:
-          customnetwork:
+          custom:
             ipv4_address: 172.20.0.5
+        cap_add:
+            - NET_ADMIN        
         command: bash -c "python edge.py data2.csv 23 10"
         deploy:
             resources:
@@ -61,7 +74,8 @@ services:
                   memory: 128M   
 
 networks:
-  customnetwork:
+  custom:
+    name: custom
     ipam:
       config:
         - subnet: 172.20.0.0/16

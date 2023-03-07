@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.10
 WORKDIR	/home
 
 ENV PYTHON_PACKAGES="\
@@ -6,7 +6,7 @@ ENV PYTHON_PACKAGES="\
     matplotlib \
     scikit-learn \
 " 
-RUN apt update && pip install --no-cache-dir $PYTHON_PACKAGES
+RUN apt update && apt -y install iproute2 && pip install --upgrade pip && pip install --no-cache-dir $PYTHON_PACKAGES
 
 ADD . .
 
