@@ -7,7 +7,7 @@ Created on Tue Feb 28 18:11:53 2023
 import os.path as osp
 import numpy as np
 
-data = np.loadtxt("C:/Users/amarmorato/Desktop/Docker/Edge1/data.csv",delimiter=",", dtype=float)
+data = np.loadtxt("/home/andrea/Scrivania/Tesi/Docker_Dist/Edge/data.csv",delimiter=",", dtype=float)
 
 np.random.shuffle(data)
 

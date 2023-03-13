@@ -1,4 +1,4 @@
 #!/bin/bash
-docker build -t cloud_ND ./Cloud
-docker build -t edge_ND ./Edge
+docker build -t cloud_nd ./Cloud
+docker build -t edge_nd ./Edge
 docker compose up

@@ -81,8 +81,8 @@ print(x[:10])
 print(y[:10])
 db = DBSCAN(eps=eps, min_samples=minPts).fit(x)
 y_sklearn = db.labels_
+print(f"DBSCAN end:{time.time()-tStart}")
 print("results")
-print(y_sklearn[:10])
 
 print(f"Homogeneity: {metrics.homogeneity_score(y, y_sklearn):.3f}")
 print(f"Completeness: {metrics.completeness_score(y, y_sklearn):.3f}")

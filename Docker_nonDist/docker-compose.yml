@@ -2,32 +2,32 @@ version: "3.9"
 services:
     cloud:  
         container_name: cloud_seq    
-        image: cloud_seq
+        image: cloud_nd
         networks:
           custom:
             ipv4_address: 172.21.0.2 
         cap_add:
             - NET_ADMIN           
-        command: wondershaper eth0 100 100
+        #command: wondershaper eth0 1000 1000
         command: bash -c "python cloud.py 3 23 10" 
         deploy:
             resources:
                 limits:
-                  cpus: "0.60"
-                  memory: 2048M
+                  cpus: "1.0"
+                  memory: 4096M
                 reservations:
-                  cpus: "0.35"
+                  cpus: "0.75"
                   memory: 512M   
        
     edge0: 
         container_name: edge_seq0
-        image: edge_seq
+        image: edge_nd
         networks:
           custom:
             ipv4_address: 172.21.0.3
         cap_add:
             - NET_ADMIN            
-        command: wondershaper eth0 100 100
+       # command: wondershaper eth0 1000 1000
         command: bash -c "python edge.py data0.csv"
         deploy:
             resources:
@@ -35,19 +35,19 @@ services:
                   cpus: "0.30"
                   memory: 512M
                 reservations:
-                  cpus: "0.55"
+                  cpus: "0.25"
                   memory: 128M         
 
     edge1: 
         container_name: edge_seq1
-        image: edge_seq
+        image: edge_nd
         networks:
           custom:
             ipv4_address: 172.21.0.4    
         cap_add:
             - NET_ADMIN        
         
-        command: wondershaper eth0 100 100
+        #command: wondershaper eth0 1000 1000
         command: bash -c "python edge.py data1.csv"
 
         deploy:
@@ -56,18 +56,18 @@ services:
                   cpus: "0.30"
                   memory: 512M
                 reservations:
-                  cpus: "0.55"
+                  cpus: "0.25"
                   memory: 128M   
     
     edge2:
         container_name: edge_seq2
-        image: edge_seq
+        image: edge_nd
         networks:
           custom:
             ipv4_address: 172.21.0.5
         cap_add:
             - NET_ADMIN 
-        command: wondershaper eth0 100 100
+        #command: wondershaper eth0 1000 1000
         command: bash -c "python edge.py data2.csv"
         
         deploy:
@@ -76,7 +76,7 @@ services:
                   cpus: "0.30"
                   memory: 512M
                 reservations:
-                  cpus: "0.55"
+                  cpus: "0.25"
                   memory: 128M   
 
 networks:

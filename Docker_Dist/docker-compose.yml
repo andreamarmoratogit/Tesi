@@ -14,10 +14,10 @@ services:
         deploy:
             resources:
                 limits:
-                  cpus: "0.60"
-                  memory: 2048M
+                  cpus: "1.0"
+                  memory: 4096M
                 reservations:
-                  cpus: "0.35"
+                  cpus: "0.75"
                   memory: 512M   
        
     edge0: 
@@ -37,7 +37,7 @@ services:
                   cpus: "0.30"
                   memory: 512M
                 reservations:
-                  cpus: "0.55"
+                  cpus: "0.25"
                   memory: 128M         
 
     edge1: 
@@ -59,7 +59,7 @@ services:
                   cpus: "0.30"
                   memory: 512M
                 reservations:
-                  cpus: "0.55"
+                  cpus: "0.25"
                   memory: 128M   
     
     edge2:
@@ -80,7 +80,7 @@ services:
                   cpus: "0.30"
                   memory: 512M
                 reservations:
-                  cpus: "0.55"
+                  cpus: "0.25"
                   memory: 128M   
 
 networks:
