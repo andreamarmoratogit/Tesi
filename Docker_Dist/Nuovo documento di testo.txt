@@ -1,0 +1,18 @@
+docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock gaiaadm/pumba -l info netem -d 2m --tc-image value gaiadocker/iproute2 delay -t 3s edge0-1 edge1-1 edge2-1 cloud-1                              
+
+
+
+
+
+docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock gaiaadm/pumba netem --interface eth0 --duration 5m delay --time 5000 cloud edge0 edge1 edge2                                                               
+
+
+
+docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock gaiaadm/pumba netem --duration 10s --tc-image gaiadocker/iproute2 delay --time 3000 ping
+
+
+docker run -it --rm --cap-add NET_ADMIN --name ping alpine sh -c "apk add --update iproute2 && ping 8.8.8.8"
+
+
+
+docker exec ping tc qdisc add dev eth0 root netem delay 100ms

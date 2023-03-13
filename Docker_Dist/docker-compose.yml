@@ -1,0 +1,91 @@
+version: "3.9"
+services:
+    cloud:  
+        container_name: cloud    
+        image: cloud
+        build: ./Cloud
+        networks:
+          custom:
+            ipv4_address: 172.20.0.2 
+        cap_add:
+            - NET_ADMIN            
+        #command: tc qdisc add dev eth0 root netem delay 1000ms
+        command: bash -c "python cloud.py 3 23 10" 
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.60"
+                  memory: 2048M
+                reservations:
+                  cpus: "0.35"
+                  memory: 512M   
+       
+    edge0: 
+        container_name: edge0
+        image: edge
+        build: ./Edge
+        networks:
+          custom:
+            ipv4_address: 172.20.0.3
+        cap_add:
+            - NET_ADMIN            
+        #command: tc qdisc add dev eth0 root netem delay 1000ms
+        command: bash -c "python edge.py data0.csv 23 10"
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.30"
+                  memory: 512M
+                reservations:
+                  cpus: "0.55"
+                  memory: 128M         
+
+    edge1: 
+        container_name: edge1
+        image: edge
+        build: ./Edge
+        networks:
+          custom:
+            ipv4_address: 172.20.0.4    
+        cap_add:
+            - NET_ADMIN        
+        
+        #command: tc qdisc add dev eth0 root netem delay 1000ms
+        command: bash -c "python edge.py data1.csv 23 10"
+
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.30"
+                  memory: 512M
+                reservations:
+                  cpus: "0.55"
+                  memory: 128M   
+    
+    edge2:
+        container_name: edge2
+        image: edge
+        build: ./Edge
+        networks:
+          custom:
+            ipv4_address: 172.20.0.5
+        cap_add:
+            - NET_ADMIN 
+        #command: tc qdisc add dev eth0 root netem delay 1000ms
+        command: bash -c "python edge.py data2.csv 23 10"
+        
+        deploy:
+            resources:
+                limits:
+                  cpus: "0.30"
+                  memory: 512M
+                reservations:
+                  cpus: "0.55"
+                  memory: 128M   
+
+networks:
+  custom:
+    name: custom
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
